@@ -10,9 +10,19 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }
-
+exports.getBios = (req, res, next) => {
+  let bios = []
+  for (let i = 0; i < req.params.num; i++) {
+    bios.push(bio())
+  }
+  res.send(bios);
+}
 exports.getBio = (req, res, next) => {
-  
+  res.send(bio())
+
+};
+
+function bio(req, res, next) {
 
   let n1 = firstNames[getRandomInt(0, firstNames.length)];
   let n2 = firstNames[getRandomInt(0, firstNames.length)];
@@ -33,7 +43,7 @@ exports.getBio = (req, res, next) => {
 //    const bio = "Standing " + h + "cm tall and weighing " + w + "kg, " + n1 + " " + n2 + " is " + a + " years old, " + a1 + ", and " + a2 + ". They enjoy " + t1 + " and " + t2 + ", and had a " + child + " childhood. " + n1 + " " + anim + " " + animal + ".";
   const bio = n1 + " " + n2 + " grew up in " + country1 + " and currently lives in " + country2 + ". They are " + a + " years old, " + h + "cm tall, and weighs " + w + "kg. " + n1 + " is " + a1 + " and " + a2 + ", and had a " + child + " childhood. Their favourite things are " + t1 + " and " + t2 + ", and they " + anim + " " + animal + ".";
 
-      res.send({
+      let bioToSend = {
         bio: bio,
         firstName: n1,
         lastName: n2,
@@ -49,5 +59,6 @@ exports.getBio = (req, res, next) => {
         thing2: t2,
         feelings: anim,
         animals: animal
-      });
-};
+      };
+      return bioToSend;
+}
